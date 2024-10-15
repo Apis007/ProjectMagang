@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('teknisi', function (Blueprint $table) {
             $table->id();
-            $table->string('nama',20);
-            $table->string('no_hp',13);
+            $table->string('nama', 20);
+            $table->string('no_hp', 13);
+            $table->timestamps(); // Ini akan membuat kolom created_at dan updated_at secara otomatis
         });
     }
 
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('teknisi');
     }
 };
