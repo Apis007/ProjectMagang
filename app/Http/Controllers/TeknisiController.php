@@ -15,11 +15,12 @@ class TeknisiController extends Controller
 
     public function store(Request $request)
     {
+        
         $request->validate([
-            'nama' => 'required|max:20',
-            'no_hp' => 'required|max:13',
+            'nama' => 'required|max:255',
+            'no_hp' => 'required|integer',
         ]);
-
+        //dd($request->all());
         Teknisi::create($request->all());
         return redirect()->back()->with('success', 'Teknisi berhasil ditambahkan.');
     }
@@ -27,14 +28,14 @@ class TeknisiController extends Controller
     public function edit($id)
     {
         $teknisi = Teknisi::find($id);
-        return response()->json($pelanggan);
+        return response()->json($teknisi);
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
             'nama' => 'required|max:20',
-            'no_hp' => 'required|max:13',
+            'no_hp' => 'required|integer',
         ]);
 
         $teknisi = Teknisi::find($id);

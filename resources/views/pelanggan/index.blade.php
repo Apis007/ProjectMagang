@@ -40,6 +40,7 @@
                                                 <td>{{ $p->status }}</td>
                                                 <td>Rp. {{ number_format($p->paket, 0, ',', '.') }}</td>
                                                 <td>
+                                                <!-- Modal Edit -->
                                                     <button class="btn btn-warning btn-sm edit" data-id="{{ $p->id }}"
                                                         data-toggle="modal" data-target="#editModal">Edit</button>
                                                     <form action="{{ route('pelanggan.destroy', $p->id) }}"
@@ -191,7 +192,4 @@
         </form>
     </div>
 </div>
-
-<!-- Modal Edit -->
-
 @endsection

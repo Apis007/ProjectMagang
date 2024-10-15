@@ -9,7 +9,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="col-md-10 p-0">
+            <div class="col-md-10 p-0">
             <section class="content">
                 <div class="container-fluid p-0">
                     <div class="row">
@@ -20,8 +20,9 @@
                                     <button class="btn btn-primary float-right" data-toggle="modal"
                                         data-target="#tambahModal">Tambah Teknisi</button>
                                 </div>
+                                <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table class="table table-bordered table-striped">
+                                    <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Nama</th>
@@ -33,17 +34,56 @@
                                             @foreach($teknisi as $t)
                                             <tr>
                                                 <td>{{ $t->nama }}</td>
-                                                <td>{{ $t->nomor_hp }}</td>
+                                                <td>{{ $t->no_hp }}</td>
                                                 <td>
+                                                    <!-- Edit Button -->
                                                     <button class="btn btn-warning btn-sm edit" data-id="{{ $t->id }}"
-                                                        data-toggle="modal" data-target="#editModal">Edit</button>
-
-                                                    <form action="{{ route('teknisi.destroy', $t->id) }}" method="POST" style="display:inline-block;">
+                                                        data-nama="{{ $t->nama }}" data-no_hp="{{ $t->no_hp }}"
+                                                        data-toggle="modal" data-target="#editModal{{ $t->id }}">Edit</button>
+                                                    <!-- Delete Form -->
+                                                    <form action="{{ route('teknisi.destroy', $t->id) }}"
+                                                        method="POST" style="display:inline-block;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger btn-sm"
                                                             onclick="return confirm('Yakin hapus?')">Hapus</button>
                                                     </form>
+
+                                                    <!-- Modal Edit -->
+                                                    <div class="modal fade" id="editModal{{ $t->id }}" tabindex="-1" role="dialog"
+                                                        aria-labelledby="editModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <form action="{{ route('teknisi.update', $t->id) }}" method="POST">
+                                                                @csrf
+                                                                @method('POST')
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="editModalLabel">Edit Teknisi</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="form-group">
+                                                                            <label for="edit-nama">Nama</label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="nama" id="edit-nama" value="{{ $t->nama }}" required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="edit-no_hp">Nomor HP</label>
+                                                                            <input type="number" class="form-control"
+                                                                                name="no_hp" id="edit-no_hp" value="{{ $t->no_hp }}" required>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Batal</button>
+                                                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -77,8 +117,8 @@
                         <input type="text" class="form-control" name="nama" required>
                     </div>
                     <div class="form-group">
-                        <label for="nomor_hp">Nomor HP</label>
-                        <input type="text" class="form-control" name="nomor_hp" required>
+                        <label for="no_hp">Nomor HP</label>
+                        <input type="number" class="form-control" name="no_hp" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -90,5 +130,4 @@
     </div>
 </div>
 
-<!-- Modal Edit -->
 @endsection
