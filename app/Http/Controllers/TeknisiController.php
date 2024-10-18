@@ -15,12 +15,11 @@ class TeknisiController extends Controller
 
     public function store(Request $request)
     {
-        
         $request->validate([
-            'nama' => 'required|max:255',
-            'no_hp' => 'required|integer',
+            'nama' => 'required|max:20',
+            'no_hp' => 'required|max:13',
         ]);
-        //dd($request->all());
+
         Teknisi::create($request->all());
         return redirect()->back()->with('success', 'Teknisi berhasil ditambahkan.');
     }
@@ -35,7 +34,7 @@ class TeknisiController extends Controller
     {
         $request->validate([
             'nama' => 'required|max:20',
-            'no_hp' => 'required|integer',
+            'no_hp' => 'required|max:13',
         ]);
 
         $teknisi = Teknisi::find($id);

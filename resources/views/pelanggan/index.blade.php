@@ -16,7 +16,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Data Pelanggan</h3>
+                                    <h3 class="card-title">Data Teknisi</h3>
                                     <button class="btn btn-primary float-right" data-toggle="modal"
                                         data-target="#tambahModal">Tambah Pelanggan</button>
                                 </div>
@@ -40,7 +40,6 @@
                                                 <td>{{ $p->status }}</td>
                                                 <td>Rp. {{ number_format($p->paket, 0, ',', '.') }}</td>
                                                 <td>
-                                                <!-- Modal Edit -->
                                                     <button class="btn btn-warning btn-sm edit" data-id="{{ $p->id }}"
                                                         data-toggle="modal" data-target="#editModal">Edit</button>
                                                     <form action="{{ route('pelanggan.destroy', $p->id) }}"
@@ -192,4 +191,7 @@
         </form>
     </div>
 </div>
+
+<!-- Modal Edit -->
+
 @endsection
