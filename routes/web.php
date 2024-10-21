@@ -19,7 +19,7 @@ Route::get('/login', [LoginController::class, 'halaman_login']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 // Rute untuk dashboard dengan middleware auth
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+// Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 // Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 // Route::post('/login', [LoginController::class, 'login']);
@@ -45,4 +45,5 @@ Route::delete('teknisi/destroy/{id}', [TeknisiController::class, 'destroy'])->na
 Route::post('/redaman/import', [RedamanController::class, 'import'])->name('redaman.import');
 Route::get('redaman', [RedamanController::class, 'index'])->name('redaman.index');
 
-// Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search');

@@ -27,7 +27,7 @@ class LoginController extends Controller
         if ($user && Hash::check($request->password, $user->password)) {
             // Jika password yang diinput cocok dengan password yang di-hash
             Auth::login($user);
-            return redirect()->intended('/pelanggan');
+            return redirect()->intended('/dashboard');
         } else {
             return back()->withErrors(['loginError' => 'Username atau password salah.']);
         }

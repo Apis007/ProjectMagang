@@ -16,7 +16,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Data Teknisi</h3>
+                                    <h3 class="card-title">Data Pelanggan</h3>
                                     <button class="btn btn-primary float-right" data-toggle="modal"
                                         data-target="#tambahModal">Tambah Pelanggan</button>
                                 </div>
@@ -48,7 +48,8 @@
                                                         @method('DELETE')
                                                         <button class="btn btn-danger btn-sm"
                                                             onclick="return confirm('Yakin hapus?')">Hapus</button>
-                                                    </form>
+                                                        </form>
+                                                        <button class="btn btn-primary btn-sm detail">Detail</button>
                                                     <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
                                                         aria-labelledby="editModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">

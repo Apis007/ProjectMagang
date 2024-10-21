@@ -10,7 +10,7 @@ class Redaman extends Model
     use HasFactory;
 
     protected $table = 'port_redaman';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'port', 
