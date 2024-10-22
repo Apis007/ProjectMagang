@@ -6,10 +6,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\RedamanController;
 use App\Http\Controllers\TeknisiController;
+use App\Http\Controllers\DetailController;
 
 // Rute untuk halaman welcome
 Route::get('/', function () {
-    return view('pelanggan.index');
+    return view('login.login');
 });
 
 // Rute untuk halaman login (GET)
@@ -25,9 +26,9 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 // Route::post('/login', [LoginController::class, 'login']);
 // Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');  // Tampilan halaman dashboard
-// })->middleware('auth');  // Hanya bisa diakses jika sudah login
+Route::get('/dashboard', function () {
+    return view('dashboard');  // Tampilan halaman dashboard
+})->middleware('auth');  // Hanya bisa diakses jika sudah login
 
 Route::get('pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
 Route::post('pelanggan/store', [PelangganController::class, 'store'])->name('pelanggan.store');
@@ -47,3 +48,5 @@ Route::get('redaman', [RedamanController::class, 'index'])->name('redaman.index'
 
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search');
+
+Route::get('/pelanggan/{id}/detail', [PelangganController::class, 'detail'])->name('pelanggan.detail');

@@ -51,4 +51,13 @@ class PelangganController extends Controller
         Pelanggan::find($id)->delete();
         return redirect()->back()->with('success', 'Pelanggan berhasil dihapus.');
     }
+
+    public function detail($id)
+{
+    // Mengambil data pelanggan berdasarkan id
+    $pelanggan = Pelanggan::findOrFail($id);
+    
+    return view('pelanggan.detail', compact('pelanggan'));
+}
+
 }

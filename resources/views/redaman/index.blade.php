@@ -30,6 +30,7 @@
                                                 <th>Nama</th>
                                                 <th>Alamat</th>
                                                 <th>Paket</th>
+                                                <th>Tanggal</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -41,6 +42,7 @@
                                                 <td>{{ $r->nama }}</td>
                                                 <td>{{ $r->alamat }}</td>
                                                 <td>{{ $r->paket }}</td>
+                                                <td>{{ $r->created_at->format('d M Y H:i:s') }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
