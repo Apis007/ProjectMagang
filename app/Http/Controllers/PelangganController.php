@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pelanggan;
+use App\Models\Redaman;
 use Illuminate\Http\Request;
 
 class PelangganController extends Controller
@@ -16,8 +17,8 @@ class PelangganController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|max:20',
-            'alamat' => 'required|max:13',
+            'nama' => 'required|max:100',
+            'alamat' => 'required|max:255',
             'status' => 'required',
             'paket' => 'required|integer',
         ]);
@@ -35,8 +36,8 @@ class PelangganController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama' => 'required|max:20',
-            'alamat' => 'required|max:13',
+            'nama' => 'required|max:100',
+            'alamat' => 'required|max:255',
             'status' => 'required',
             'paket' => 'required|integer',
         ]);
@@ -53,11 +54,28 @@ class PelangganController extends Controller
     }
 
     public function detail($id)
-{
+    {
     // Mengambil data pelanggan berdasarkan id
     $pelanggan = Pelanggan::findOrFail($id);
-    
-    return view('pelanggan.detail', compact('pelanggan'));
-}
+
+    // Mengambil data redaman berdasarkan id pelanggan
+    $redaman = Redaman::where('id_pelanggan', $id)->get();
+
+    // Jika ada data redaman, siapkan data untuk grafik
+    if ($redaman->isNotEmpty()) {
+        $chartData = $redaman->map(function ($item) {
+            return [
+                'tanggal' => $item->created_at->format('d-m-Y'),
+                'redaman' => $item->redaman,
+            ];
+        });
+    } else {
+        // Jika tidak ada data redaman, kirim array kosong untuk grafik
+        $chartData = [];
+    }
+
+    // Mengirim data pelanggan dan data untuk grafik ke view
+    return view('pelanggan.detail', compact('pelanggan', 'chartData'));
+    }
 
 }

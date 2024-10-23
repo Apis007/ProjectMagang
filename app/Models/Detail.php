@@ -1,19 +1,31 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Models;
+use App\Models\Redaman;
+use Illuminate\Http\Request;
 
-class Detail extends Model
+class DetailController extends Controller
 {
-    use HasFactory;
+    public function detail($id)
+    {
+        // Mengambil data pelanggan berdasarkan id
+        $pelanggan = Pelanggan::findOrFail($id);
 
-    protected $table = 'teknisi';
-    public $timestamps = false;
+        // Mengambil data redaman pelanggan
+        $redaman = Redaman::where('id_pelanggan', $id)->orderBy('created_at', 'asc')->get();
 
-    protected $fillable = [
-        'nama', 
-        'no_hp', 
-    ];
+        // Siapkan data untuk grafik
+        $chartData = [];
+        foreach ($redaman as $item) {
+            $chartData[] = [
+                'tanggal' => $item->created_at->format('Y-m-d'), // Format tanggal
+                'redaman' => $item->redaman
+            ];
+        }
+
+        // Kirim data pelanggan dan data grafik ke view
+        return view('pelanggan.detail', compact('pelanggan', 'chartData'));
+    }
 }
