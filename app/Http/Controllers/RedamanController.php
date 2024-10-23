@@ -16,7 +16,6 @@ class RedamanController extends Controller
     {
         $redaman = Redaman::all();
         return view('redaman.index', compact('redaman'));
-        dd($redaman);
     }
 
     public function import(Request $request)

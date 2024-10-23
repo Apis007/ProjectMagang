@@ -29,6 +29,7 @@
                                                 <th>Alamat</th>
                                                 <th>Status</th>
                                                 <th>Paket</th>
+                                                <th>Teknisi</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -39,9 +40,10 @@
                                                 <td>{{ $p->alamat }}</td>
                                                 <td>{{ $p->status }}</td>
                                                 <td>Rp. {{ number_format($p->paket, 0, ',', '.') }}</td>
+                                                <td>{{ $p->teknisi ? $p->teknisi->nama : 'Tidak ada teknisi' }}</td>
                                                 <td>
                                                     <button class="btn btn-warning btn-sm edit" data-id="{{ $p->id }}"
-                                                        data-toggle="modal" data-target="#editModal">Edit</button>
+                                                        data-toggle="modal" data-target="#editModal{{$p->id}}">Edit</button>
                                                     <form action="{{ route('pelanggan.destroy', $p->id) }}"
                                                         method="POST" style="display:inline-block;">
                                                         @csrf
@@ -51,77 +53,65 @@
                                                         </form>
                                                         <a href="{{ route('pelanggan.detail', $p->id) }}" 
         class="btn btn-primary btn-sm">Detail</a>
-                                                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
-                                                        aria-labelledby="editModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <form action="{{ route('pelanggan.update' , $p->id) }}"
-                                                                method="POST" id="editForm">
-                                                                @csrf
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="editModalLabel">Edit
-                                                                            Pelanggan</h5>
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="form-group">
-                                                                            <label for="edit-nama">Nama</label>
-                                                                            <input type="text" class="form-control"
-                                                                                name="nama" id="edit-nama"
-                                                                                value="{{ $p->nama }}" required>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label for="edit-alamat">Alamat</label>
-                                                                            <input type="text" class="form-control"
-                                                                                name="alamat" id="edit-alamat"
-                                                                                value="{{ $p->alamat }}" required>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label for="edit-status">Status</label>
-                                                                            <select name="status" id="edit-status"
-                                                                                class="form-control" required>
-                                                                                <option value="normal"
-                                                                                    {{ $p->status == 'normal' ? 'selected' : '' }}>
-                                                                                    Normal</option>
-                                                                                <option value="promo"
-                                                                                    {{ $p->status == 'promo' ? 'selected' : '' }}>
-                                                                                    Promo</option>
-                                                                            </select>
-                                                                        </div>
+        <div class="modal fade" id="editModal{{$p->id}}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="{{ route('pelanggan.update', $p->id) }}" method="POST" id="editForm">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Pelanggan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="edit-nama">Nama</label>
+                        <input type="text" class="form-control" name="nama" id="edit-nama" value="{{ $p->nama }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-alamat">Alamat</label>
+                        <input type="text" class="form-control" name="alamat" id="edit-alamat" value="{{ $p->alamat }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-status">Status</label>
+                        <select name="status" id="edit-status" class="form-control" required>
+                            <option value="normal" {{ $p->status == 'normal' ? 'selected' : '' }}>Normal</option>
+                            <option value="promo" {{ $p->status == 'promo' ? 'selected' : '' }}>Promo</option>
+                        </select>
+                    </div>
 
-                                                                        <div class="form-group">
-                                                                            <label for="edit-paket">Paket</label>
-                                                                            <select name="paket" id="edit-paket"
-                                                                                class="form-control" required>
-                                                                                <option value="100000"
-                                                                                    {{ $p->paket == 100000 ? 'selected' : '' }}>
-                                                                                    Rp. 100000</option>
-                                                                                <option value="165000"
-                                                                                    {{ $p->paket == 165000 ? 'selected' : '' }}>
-                                                                                    165 ribu</option>
-                                                                                <option value="200000"
-                                                                                    {{ $p->paket == 200000 ? 'selected' : '' }}>
-                                                                                    200 ribu</option>
-                                                                                <option value="220000"
-                                                                                    {{ $p->paket == 220000 ? 'selected' : '' }}>
-                                                                                    220 ribu</option>
-                                                                            </select>
-                                                                        </div>
+                    <div class="form-group">
+                        <label for="edit-paket">Paket</label>
+                        <select name="paket" id="edit-paket" class="form-control" required>
+                            <option value="100000" {{ $p->paket == 100000 ? 'selected' : '' }}>Rp. 100000</option>
+                            <option value="165000" {{ $p->paket == 165000 ? 'selected' : '' }}>165 ribu</option>
+                            <option value="200000" {{ $p->paket == 200000 ? 'selected' : '' }}>200 ribu</option>
+                            <option value="220000" {{ $p->paket == 220000 ? 'selected' : '' }}>220 ribu</option>
+                        </select>
+                    </div>
 
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">Batal</button>
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary">Simpan</button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
+                    <div class="form-group">
+                        <label for="edit-teknisi">Teknisi</label>
+                        <select name="teknisi_id" id="edit-teknisi" class="form-control" required>
+                            <option value="" disabled>Pilih Teknisi</option>
+                            @foreach($teknisi as $t)
+                                <option value="{{ $t->id }}" {{ $p->teknisi_id == $t->id ? 'selected' : '' }}>
+                                    {{ $t->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -183,7 +173,15 @@
                             <option value="220000">220 ribu</option>
                         </select>
                     </div>
-
+                    <div class="form-group">
+    <label for="teknisi">Teknisi</label>
+    <select name="teknisi_id" class="form-control" required>
+        <option value="" disabled selected>Pilih Teknisi</option>
+        @foreach($teknisi as $t)
+        <option value="{{ $t->id }}">{{ $t->nama }}</option>
+        @endforeach
+    </select>
+</div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>

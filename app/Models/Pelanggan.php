@@ -10,12 +10,18 @@ class Pelanggan extends Model
     use HasFactory;
 
     protected $table = 'pelanggan';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'nama', 
         'alamat', 
         'status', 
         'paket',
+        'teknisi_id',
     ];
+
+    public function teknisi()
+    {
+        return $this->belongsTo(Teknisi::class, 'teknisi_id');
+    }
 }

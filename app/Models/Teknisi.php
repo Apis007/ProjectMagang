@@ -16,4 +16,9 @@ class Teknisi extends Model
         'nama', 
         'no_hp', 
     ];
+    
+    public function pelanggan()
+    {
+        return $this->hasMany(Pelanggan::class);
+    }
 }
