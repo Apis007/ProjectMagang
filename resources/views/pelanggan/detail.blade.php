@@ -69,8 +69,7 @@
         // Data yang dikirim dari controller
         var chartData = {!! json_encode($chartData) !!};
 
-        console.log('Chart Data:', chartData);
-    console.log('Chart Data Length:', chartData.length);
+        console.log('Chart Data for Pelanggan:', chartData);
 
         // Jika chartData kosong, tampilkan log atau pemberitahuan
         if (chartData.length === 0) {
@@ -97,24 +96,23 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false, // Memastikan grafik responsif tanpa mempertahankan aspek rasio
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            stepSize: 10 // Menyesuaikan stepSize pada sumbu Y untuk jarak antar nilai
+                            stepSize: 10
                         }
                     }
                 },
                 plugins: {
                     legend: {
                         display: true,
-                        position: 'top' // Menampilkan label dataset di bagian atas grafik
+                        position: 'top'
                     }
                 }
             }
         });
     });
 </script>
-
 @endsection

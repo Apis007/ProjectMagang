@@ -120,4 +120,25 @@ class PelangganController extends Controller
 
     return view('pelanggan.detail', compact('pelanggan', 'teknisi', 'chartData'));
 }
+
+public function show($id)
+{
+    $pelanggan = Pelanggan::findOrFail($id);
+    // Ambil data redaman berdasarkan pelanggan_id
+    $chartData = Redaman::where('pelanggan_id', $id)
+    ->select('tanggal', 'redaman')
+    ->get();
+    
+    // Debugging: cek apakah data chart ada untuk pelanggan lain
+    if ($chartData->isEmpty()) {
+        // Jika kosong, cetak pesan untuk debugging
+        \Log::info("Tidak ada data redaman untuk pelanggan ID: {$id}");
+    }
+
+    return view('pelanggan.show', [
+        'pelanggan' => $pelanggan,
+        'chartData' => $chartData
+    ]);
+}
+
 }

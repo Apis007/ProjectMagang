@@ -24,4 +24,9 @@ class Pelanggan extends Model
     {
         return $this->belongsTo(Teknisi::class, 'teknisi_id');
     }
+
+    public function redaman()
+{
+    return $this->hasMany(Redaman::class);
+}
 }

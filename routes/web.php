@@ -35,6 +35,7 @@ Route::post('pelanggan/store', [PelangganController::class, 'store'])->name('pel
 Route::get('pelanggan/edit/{id}', [PelangganController::class, 'edit'])->name('pelanggan.edit');
 Route::post('pelanggan/update/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
 Route::delete('pelanggan/destroy/{id}', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
+Route::get('/pelanggan/{id}', [PelangganController::class, 'show'])->name('pelanggan.show');
 
 // Routes for Teknisi management
 Route::get('teknisi', [TeknisiController::class, 'index'])->name('teknisi.index');

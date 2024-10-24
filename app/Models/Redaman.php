@@ -10,12 +10,16 @@ class Redaman extends Model
     use HasFactory;
 
     protected $table = 'port_redaman';
+    public $timestamps = true;
     
     protected $fillable = [
-        'id_pelanggan',
+        'port',
         'redaman',
-        'created_at',
-        'updated_at'
+        'id_pelanggan',
+        'nama',
+        'alamat',
+        'paket',
+        
     ];
 
     // Tambahkan ini untuk melihat query yang dijalankan
