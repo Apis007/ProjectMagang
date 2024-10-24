@@ -1,10 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Pelanggan; // Gantilah dengan model yang sesuai
+use App\Models\Pelanggan;
+use App\Models\Teknisi;
 use Illuminate\Http\Request;
 
-class PelangganController extends Controller
+class DetailController extends Controller
 {
     public function show($id)
     {

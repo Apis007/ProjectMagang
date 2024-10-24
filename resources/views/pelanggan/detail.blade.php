@@ -35,6 +35,10 @@
                                         <label for="paket">Paket</label>
                                         <input type="text" class="form-control" id="paket" name="paket" value="Rp. {{ number_format($pelanggan->paket, 0, ',', '.') }}" readonly>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="teknisi">Teknisi</label>
+                                        <input type="text" class="form-control" id="teknisi" name="teknisi" value="{{ $pelanggan->teknisi ? $pelanggan->teknisi->nama : 'Tidak Ada Teknisi' }}" readonly>
+                                    </div>
                                 </div>
                             </div>
 
@@ -58,14 +62,21 @@
     </div>
 </div>
 
-<!-- Script untuk menampilkan ChartJS -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var ctx = document.getElementById('redamanChart').getContext('2d');
         
         // Data yang dikirim dari controller
         var chartData = {!! json_encode($chartData) !!};
+
+        console.log('Chart Data:', chartData);
+    console.log('Chart Data Length:', chartData.length);
+
+        // Jika chartData kosong, tampilkan log atau pemberitahuan
+        if (chartData.length === 0) {
+            console.log("Tidak ada data redaman untuk ditampilkan.");
+            return; // Tidak melanjutkan pembuatan grafik
+        }
 
         var labels = chartData.map(item => item.tanggal); // Tanggal sebagai label
         var redamanData = chartData.map(item => item.redaman); // Nilai redaman
@@ -105,4 +116,5 @@
         });
     });
 </script>
+
 @endsection

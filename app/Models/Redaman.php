@@ -10,26 +10,26 @@ class Redaman extends Model
     use HasFactory;
 
     protected $table = 'port_redaman';
-    public $timestamps = true;
-
+    
     protected $fillable = [
-        'port', 
-        'redaman', 
-        'id_pelanggan', 
-        'nama', 
-        'alamat', 
-        'paket', 
+        'id_pelanggan',
+        'redaman',
+        'created_at',
+        'updated_at'
     ];
 
-    public function model(array $row)
+    // Tambahkan ini untuk melihat query yang dijalankan
+    protected static function boot()
     {
-        return new Redaman([
-            'port'    => $row['port'],
-            'redaman' => $row['redaman'],
-            'id' => $row['id_pelanggan'],
-            'nama'    => $row['nama'],
-            'alamat'  => $row['alamat'],
-            'paket'   => $row['paket'],
-        ]);
+        parent::boot();
+        
+        static::creating(function ($model) {
+            \Log::info("Creating new redaman:", $model->toArray());
+        });
+    }
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class, 'id_pelanggan');
     }
 }

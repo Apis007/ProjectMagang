@@ -6,6 +6,8 @@ use App\Models\Pelanggan;
 use App\Models\Redaman;
 use App\Models\Teknisi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class PelangganController extends Controller
 {
@@ -80,29 +82,42 @@ class PelangganController extends Controller
     }
 
     public function detail($id)
-    {
-    // Mengambil data pelanggan berdasarkan id
+{
+    // Log ID pelanggan yang sedang diakses
+    \Log::info("Mengakses detail pelanggan ID: " . $id);
+
+    // Mengambil data pelanggan
     $pelanggan = Pelanggan::findOrFail($id);
+    \Log::info("Data Pelanggan:", $pelanggan->toArray());
 
-    // Mengambil data redaman berdasarkan id pelanggan
-    $redaman = Redaman::where('id_pelanggan', $id)->get();
+    // Mengambil dan log data redaman mentah
+    $redaman = Redaman::where('id_pelanggan', $id)
+        ->orderBy('created_at', 'asc')
+        ->get();
+    \Log::info("Jumlah data redaman: " . $redaman->count());
+    \Log::info("Query redaman:", [
+        'sql' => Redaman::where('id_pelanggan', $id)->toSql(),
+        'bindings' => Redaman::where('id_pelanggan', $id)->getBindings()
+    ]);
 
-    // Jika ada data redaman, siapkan data untuk grafik
+    // Mengambil data teknisi
+    $teknisi = Teknisi::find($pelanggan->teknisi_id);
+
+    // Siapkan data chart dengan debugging
     if ($redaman->isNotEmpty()) {
         $chartData = $redaman->map(function ($item) {
-            return [
-                'tanggal' => $item->created_at->format('d-m-Y'),
-                'redaman' => $item->redaman,
+            $data = [
+                'tanggal' => date('d-m-Y', strtotime($item->created_at)),
+                'redaman' => (float)$item->redaman,
             ];
+            \Log::info("Processing redaman item:", $data);
+            return $data;
         });
     } else {
-        // Jika tidak ada data redaman, kirim array kosong untuk grafik
         $chartData = [];
+        \Log::info("Tidak ada data redaman untuk pelanggan dengan ID: " . $id);
     }
 
-    // Mengirim data pelanggan dan data untuk grafik ke view
-    return view('pelanggan.detail', compact('pelanggan', 'chartData'));
-    }
-    
-
+    return view('pelanggan.detail', compact('pelanggan', 'teknisi', 'chartData'));
+}
 }
